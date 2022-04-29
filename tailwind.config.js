@@ -10,11 +10,19 @@ module.exports = {
       current: "currentColor",
       black: colors.black,
       white: colors.white,
-      gray: colors.slate,
+      slate: colors.slate,
+      red: colors.red,
       green: colors.emerald,
       purple: colors.violet,
       yellow: colors.amber,
       pink: colors.fuchsia,
     },
+    maxWidth: {
+      "50%": "50%",
+      "60%": "60%",
+    },
+    fontSize: {
+      "sm": ".75rem",
+    }
   },
 }

@@ -1,33 +1,48 @@
 
-import { Post, orm } from "./models";
+import { Post } from "./models";
+import NavBar from "./navBar";
 
-const PostCard = (props: { post: Post, first?: boolean, last?: boolean }) => {
+export const PostCard = (props: { post: Post, first?: boolean, last?: boolean }) => {
     let { post } = props;
-    let className = "p-4 border-solid border-2 border-slate-600 ";
-    if (props.first) {
-        className += "rounded-tl-lg rounded-tr-lg";
+    let className = "p-4 border-solid border-x-2 border-slate-300 ";
+    let extra: string;
+    if (props.first && props.last) {
+        extra = "border-y-2 rounded";
+    } else if (props.first) {
+        extra = "border-t-2 border-b rounded-tl-lg rounded-tr-lg";
     } else if (props.last) {
-        className += "rounded-bl-lg rounded-br-lg";
+        extra = "border-b-2 border-t rounded-bl-lg rounded-br-lg";
+    } else {
+        extra = "border-y-1";
     }
+    className += extra;
+
     return (<div className={className}>
         <div className="font-semibold font-2xl">{post.title}</div>
-        <div className="font-base font-slate-800">{post.author.username}</div>
+        <div className="text-base text-slate-500">
+            {post.author ? post.author.username : "deleted-flog-user"}
+        </div>
         <div className="font-sm">{post.content}</div>
     </div>)
 }
 
-export const Posts = () => {
-    let post = orm.em.resolve(Post, {
-        id: 2,
+const Posts = () => {
+    let post: Post = {
+        id: 1,
         title: "this is a title",
-        content: "content blah...",
-        author: {
-            id: 1,
-            username: "test",
-            name: undefined,
-        }
-    })
-    return (<div className="container mx-auto max-w-lg">
-        <PostCard post={post} first={true}/>
+        content: "this is the content"
+    }
+    return (<div className="container mx-auto max-w-50%">
+        <PostCard post={post} first={true} />
+        <PostCard post={post} />
+        <PostCard post={post} last={true} />
     </div>)
 }
+
+const Main = () => {
+    return (<>
+        <NavBar />
+        <Posts />
+    </>)
+}
+export default Main;
