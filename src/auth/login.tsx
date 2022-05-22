@@ -9,12 +9,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import flog from "./axiosInstance";
-import NavBar from "./navBar";
-import { CustomTextField as TextField } from "./fields";
-import * as validate from "./validators";
-import { fieldStyle } from "./globals";
-import { FormError } from "./errors";
+import flog from "../axiosInstance";
+import NavBar from "../navBar";
+import { CustomTextField as TextField } from "../fields";
+import * as validate from "../validators";
+import { fieldStyle } from "../globals";
+import { FormError } from "../errors";
 
 
 interface LoginState {

@@ -1,14 +1,12 @@
 import axios from "axios";
 
-let baseURL: "http://localhost:8888" | "http://flog.pythonanywhere.com";
+let baseURL: "http://127.0.0.1:5000" | "http://flog.flask.fun";
 if (process.env.NODE_ENV === "development") {
   // this requires you to run a local server on localhost:5000.
-  baseURL = "http://localhost:8888";
+  baseURL = "http://127.0.0.1:5000";
 } else {
-  baseURL = "http://flog.pythonanywhere.com";
+  baseURL = "http://flog.flask.fun";
 }
-
-baseURL += "/v4";
 
 const flog = axios.create({
   baseURL,

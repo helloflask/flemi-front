@@ -1,21 +1,29 @@
-export class User {
+export class PrivateUser {
     id!: number;
     username!: string;
-    name?: string;
-    posts!: { id: number }[];
-
-    constructor(id: number, username: string, name: string, posts?: { id: number }[]) {
-        this.id = id;
-        this.username = username;
-        if (posts) {
-            this.posts = posts;
-        }
-    }
+    name!: string;
+    email!: string;
+    coins!: number;
+    experience!: number;
+    location?: string;
+    about_me?: string;
+    confirmed?: boolean;
+    locked!: boolean;
+    member_since!: string;
+    last_seen!: string;
+    is_admin!: boolean;
+    clicks!: number;
+    clicks_today!: number;
+    avatar_url!: string;
+	posts?: Array<Post>;
 }
 
 export class Post {
     id!: number;
     title!: string;
     content!: string;
-    author?: { username: string, [prop: string]: any }
+    author!: {
+		username: string;
+		avatar_url: string;
+	};
 }

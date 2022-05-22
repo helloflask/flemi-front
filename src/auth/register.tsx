@@ -9,12 +9,12 @@ import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import * as validate from "./validators";
-import { CustomTextField as TextField } from "./fields";
-import NavBar from "./navBar";
-import { FieldError, FormError } from "./errors";
-import { fieldStyle } from "./globals";
-import flog from "./axiosInstance";
+import * as validate from "../validators";
+import { CustomTextField as TextField } from "../fields";
+import NavBar from "../navBar";
+import { FieldError, FormError } from "../errors";
+import { fieldStyle } from "../globals";
+import flog from "../axiosInstance";
 
 interface RegisterState {
     username: string;
@@ -78,7 +78,8 @@ export const RegisterForm = () => {
         "email": "Email invalid",
         "name": "The length must be shorter than 64",
     };
-    const handleChange = (prop: keyof RegisterState) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (prop: keyof RegisterState) =>
+	                     (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         switch (prop) {
             case "username":

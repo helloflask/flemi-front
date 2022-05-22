@@ -1,6 +1,8 @@
 
 import { Post } from "./models";
 import NavBar from "./navBar";
+import ProfileSideBar from "./profileSideBar";
+
 
 export const PostCard = (props: { post: Post, first?: boolean, last?: boolean }) => {
     let { post } = props;
@@ -33,6 +35,7 @@ const Posts = () => {
         content: "this is the content"
     }
     return (<div className="container mx-auto max-w-50%">
+        <ProfileSideBar />
         <PostCard post={post} first={true} />
         <PostCard post={post} />
         <PostCard post={post} last={true} />
