@@ -25,29 +25,6 @@ const Logo = () => (
     />
 );
 
-const UserIcon = (props: { onClick: React.MouseEventHandler }) => {
-    const [iconAlt, setIconAlt] = React.useState("");
-    const [iconUrl, setIconUrl] = React.useState("/#");
-    React.useEffect(() => {
-        setIconUrlOnPage();
-    }, []);
-
-    const setIconUrlOnPage = async () => {
-        const user = await getUserData();
-        if (user === undefined || user.avatarUrl === undefined) {
-            return;
-        }
-        setIconAlt(user.username + "Icon");
-        setIconUrl(user.avatarUrl);
-    };
-
-    return (
-        <IconButton onClick={props.onClick} sx={{ p: 0 }}>
-            <Avatar alt={iconAlt} src={iconUrl} />
-        </IconButton>
-    );
-};
-
 export default function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
@@ -69,6 +46,21 @@ export default function NavBar() {
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
+    };
+
+    const [iconAlt, setIconAlt] = React.useState("");
+    const [iconUrl, setIconUrl] = React.useState("/#");
+    React.useEffect(() => {
+        setIconUrlOnPage();
+    }, []);
+
+    const setIconUrlOnPage = async () => {
+        const user = await getUserData();
+        if (user === undefined || user.avatarUrl === undefined) {
+            return;
+        }
+        setIconAlt(user.username + "Icon");
+        setIconUrl(user.avatarUrl);
     };
 
     return (
@@ -160,7 +152,12 @@ export default function NavBar() {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            <UserIcon onClick={handleOpenUserMenu} />
+                            <IconButton
+                                onClick={handleOpenUserMenu}
+                                sx={{ p: 0 }}
+                            >
+                                <Avatar alt={iconAlt} src={iconUrl} />
+                            </IconButton>
                         </Tooltip>
                         <Menu
                             sx={{ mt: "45px" }}
