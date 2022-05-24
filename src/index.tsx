@@ -1,12 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import "./index.css";
+import "./css/index.css";
 import reportWebVitals from "./reportWebVitals";
-import Main from "./main";
-import Login from "./auth/login";
-import Register from "./auth/register";
-
+import Main from "./components/main";
+import Login from "./components/login";
+import Register from "./components/register";
 
 const root = ReactDOM.createRoot(
     document.getElementById("root") as HTMLElement

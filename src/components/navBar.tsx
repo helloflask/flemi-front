@@ -12,16 +12,49 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
+import { getUserData } from "../helpers/getData";
+
 const pages = ["Main"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const Logo = () => (
-    <img src="/favicon.png" alt="favicon" style={{ maxWidth: "50px", maxHeight: "50px" }} />
+    <img
+        src="/favicon.png"
+        alt="favicon"
+        style={{ maxWidth: "50px", maxHeight: "50px" }}
+    />
 );
 
+const UserIcon = (props: { onClick: React.MouseEventHandler }) => {
+    const [iconAlt, setIconAlt] = React.useState("");
+    const [iconUrl, setIconUrl] = React.useState("/#");
+    React.useEffect(() => {
+        setIconUrlOnPage();
+    }, []);
+
+    const setIconUrlOnPage = async () => {
+        const user = await getUserData();
+        if (user === undefined || user.avatarUrl === undefined) {
+            return;
+        }
+        setIconAlt(user.username + "Icon");
+        setIconUrl(user.avatarUrl);
+    };
+
+    return (
+        <IconButton onClick={props.onClick} sx={{ p: 0 }}>
+            <Avatar alt={iconAlt} src={iconUrl} />
+        </IconButton>
+    );
+};
+
 export default function NavBar() {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+        null
+    );
+    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+        null
+    );
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -51,7 +84,12 @@ export default function NavBar() {
                         <Logo />
                     </Typography>
 
-                    <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "flex", md: "none" },
+                        }}
+                    >
                         <IconButton
                             size="large"
                             aria-label="account of current user"
@@ -81,8 +119,13 @@ export default function NavBar() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                >
+                                    <Typography textAlign="center">
+                                        {page}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -91,11 +134,19 @@ export default function NavBar() {
                         variant="h6"
                         noWrap
                         component="div"
-                        sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "flex", md: "none" },
+                        }}
                     >
                         <Logo />
                     </Typography>
-                    <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                    <Box
+                        sx={{
+                            flexGrow: 1,
+                            display: { xs: "none", md: "flex" },
+                        }}
+                    >
                         {pages.map((page) => (
                             <Button
                                 key={page}
@@ -109,9 +160,7 @@ export default function NavBar() {
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
-                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="https://rice0208.pythonanywhere.com/silicon/v1/something"/>
-                            </IconButton>
+                            <UserIcon onClick={handleOpenUserMenu} />
                         </Tooltip>
                         <Menu
                             sx={{ mt: "45px" }}
@@ -130,8 +179,13 @@ export default function NavBar() {
                             onClose={handleCloseUserMenu}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem
+                                    key={setting}
+                                    onClick={handleCloseUserMenu}
+                                >
+                                    <Typography textAlign="center">
+                                        {setting}
+                                    </Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -140,4 +194,4 @@ export default function NavBar() {
             </Container>
         </AppBar>
     );
-};
+}

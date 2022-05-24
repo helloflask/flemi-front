@@ -9,13 +9,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import flog from "../axiosInstance";
-import NavBar from "../navBar";
-import { CustomTextField as TextField } from "../fields";
-import * as validate from "../validators";
-import { fieldStyle } from "../globals";
-import { FormError } from "../errors";
-
+import flog from "../helpers/axiosInstance";
+import NavBar from "./navBar";
+import { CustomTextField as TextField } from "../helpers/fields";
+import * as validate from "../helpers/validators";
+import { fieldStyle } from "../helpers/globals";
+import { FormError } from "../helpers/errors";
 
 interface LoginState {
     usernameOrEmail: string;
@@ -23,7 +22,6 @@ interface LoginState {
     showPassword: boolean;
     error: string;
 }
-
 
 export const LoginForm = () => {
     const [values, setValues] = React.useState<LoginState>({
@@ -35,12 +33,19 @@ export const LoginForm = () => {
     const [errors, setErrors] = React.useState({ usernameOrEmail: "" });
     const [formValid, setFormValid] = React.useState(false);
 
-    const handleChange = (prop: keyof LoginState) => (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValues({ ...values, [prop]: event.target.value });
-    };
-    const handleUsernameOrPassword = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange =
+        (prop: keyof LoginState) =>
+        (event: React.ChangeEvent<HTMLInputElement>) => {
+            setValues({ ...values, [prop]: event.target.value });
+        };
+    const handleUsernameOrPassword = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
         const usernameOrEmail = event.target.value;
-        if (!validate.username(usernameOrEmail) && !validate.email(usernameOrEmail)) {
+        if (
+            !validate.username(usernameOrEmail) &&
+            !validate.email(usernameOrEmail)
+        ) {
             setErrors({ usernameOrEmail: "Invalid username or email" });
             setFormValid(false);
         } else {
@@ -57,14 +62,16 @@ export const LoginForm = () => {
         });
     };
 
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleMouseDownPassword = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
         event.preventDefault();
     };
     const navigate = useNavigate();
     const handleButtonClick = () => {
         flog.post("/auth/login", {
             username: values.usernameOrEmail,
-            password: values.password
+            password: values.password,
         })
             .then((res: { data: { auth_token: string } }) => {
                 const token: string = res.data.auth_token;
@@ -77,7 +84,7 @@ export const LoginForm = () => {
                         setValues({ ...values, error: "User not found" });
                         break;
                     case 403:
-                        setValues({ ...values, error: "Password incorrect"});
+                        setValues({ ...values, error: "Password incorrect" });
                         break;
                 }
             });
@@ -105,28 +112,48 @@ export const LoginForm = () => {
                                 onClick={handleClickShowPassword}
                                 onMouseDown={handleMouseDownPassword}
                             >
-                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                                {values.showPassword ? (
+                                    <VisibilityOff />
+                                ) : (
+                                    <Visibility />
+                                )}
                             </IconButton>
                         </InputAdornment>
                     }
                 />
             </FormControl>
             <div id="password-error"></div>
-            <FormControl sx={{ display: "flex", justifyContent: "center", m: 2, width: "35ch" }}>
-                <Button size="large" variant="contained" onClick={handleButtonClick} disabled={!formValid}>Login</Button>
+            <FormControl
+                sx={{
+                    display: "flex",
+                    justifyContent: "center",
+                    m: 2,
+                    width: "35ch",
+                }}
+            >
+                <Button
+                    size="large"
+                    variant="contained"
+                    onClick={handleButtonClick}
+                    disabled={!formValid}
+                >
+                    Login
+                </Button>
             </FormControl>
             <FormError message={values.error} />
         </Box>
-    )
-}
+    );
+};
 
 const Login = () => {
-    return (<>
-        <NavBar />
-        <div className="container mx-auto max-50% flex justify-center">
-            <LoginForm />
-        </div>
-    </>)
+    return (
+        <>
+            <NavBar />
+            <div className="container mx-auto max-50% flex justify-center">
+                <LoginForm />
+            </div>
+        </>
+    );
 };
 
 export default Login;
