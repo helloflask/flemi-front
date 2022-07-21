@@ -27,7 +27,7 @@ export const PostCard = (props: {
         <div className={className}>
             <div className="font-semibold font-2xl">{post.title}</div>
             <div className="text-base text-slate-500">
-                {post.author ? post.author.username : "deleted-flog-user"}
+                {post.author ? post.author.username : "deleted-flemi-user"}
             </div>
             <div className="font-sm">{post.content}</div>
         </div>

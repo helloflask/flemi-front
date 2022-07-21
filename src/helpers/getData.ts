@@ -1,12 +1,12 @@
 import _ from "lodash";
-import flog from "./axiosInstance";
+import flemi from "./axiosInstance";
 
 export async function getData<T>(url: string): Promise<T | undefined> {
     const token = localStorage.getItem("token");
     if (token === null) {
         return undefined;
     }
-    return flog({
+    return flemi({
         method: "get",
         url,
         headers: {

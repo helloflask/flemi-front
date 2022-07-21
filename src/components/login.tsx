@@ -9,7 +9,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import flog from "../helpers/axiosInstance";
+import flemi from "../helpers/axiosInstance";
 import NavBar from "./navBar";
 import { CustomTextField as TextField } from "../helpers/fields";
 import * as validate from "../helpers/validators";
@@ -72,10 +72,11 @@ export const LoginForm = () => {
     };
     const navigate = useNavigate();
     const handleButtonClick = () => {
-        flog.post("/auth/login", {
-            username: values.usernameOrEmail,
-            password: values.password,
-        })
+        flemi
+            .post("/auth/login", {
+                username: values.usernameOrEmail,
+                password: values.password,
+            })
             .then((res: { data: { auth_token: string } }) => {
                 const token: string = res.data.auth_token;
                 localStorage.setItem("token", token);

@@ -14,7 +14,7 @@ import { CustomTextField as TextField } from "../helpers/fields";
 import NavBar from "./navBar";
 import { FieldError, FormError } from "../helpers/errors";
 import { fieldStyle } from "../helpers/globals";
-import flog from "../helpers/axiosInstance";
+import flemi from "../helpers/axiosInstance";
 
 interface RegisterState {
     username: string;
@@ -137,22 +137,25 @@ export const RegisterForm = () => {
     const navigate = useNavigate();
 
     const handleRegister = () => {
-        flog.post("/auth/register", {
-            username: values.username,
-            password: values.password,
-            email: values.email,
-            about_me: values.aboutMe,
-            name: values.name,
-        })
+        flemi
+            .post("/auth/register", {
+                username: values.username,
+                password: values.password,
+                email: values.email,
+                about_me: values.aboutMe,
+                name: values.name,
+            })
             .then(() => {
-                flog.post("/auth/login", {
-                    username: values.username,
-                    password: values.password,
-                }).then((res: { data: { auth_token: string } }) => {
-                    const token: string = res.data.auth_token;
-                    localStorage.setItem("token", token);
-                    return navigate("/");
-                });
+                flemi
+                    .post("/auth/login", {
+                        username: values.username,
+                        password: values.password,
+                    })
+                    .then((res: { data: { auth_token: string } }) => {
+                        const token: string = res.data.auth_token;
+                        localStorage.setItem("token", token);
+                        return navigate("/");
+                    });
             })
             .catch(({ response }) => {
                 const { message } = response.data;
