@@ -1,3 +1,9 @@
+export class Posts {
+    posts!: Post[];
+    next!: string;
+    prev!: string;
+}
+
 export default class Post {
     id!: number;
     title!: string;

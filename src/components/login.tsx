@@ -37,6 +37,9 @@ export const LoginForm = () => {
         (prop: keyof LoginState) =>
         (event: React.ChangeEvent<HTMLInputElement>) => {
             setValues({ ...values, [prop]: event.target.value });
+            if (prop === "password" && event.target.value !== "") {
+                errors.usernameOrEmail === "" && setFormValid(true);
+            }
         };
     const handleUsernameOrPassword = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -50,7 +53,7 @@ export const LoginForm = () => {
             setFormValid(false);
         } else {
             setErrors({ usernameOrEmail: "" });
-            setFormValid(true);
+            values.password !== "" && setFormValid(true);
         }
         setValues({ ...values, usernameOrEmail: event.target.value });
     };

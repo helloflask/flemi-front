@@ -12,7 +12,8 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 
-import { getUserData } from "../helpers/getData";
+import { getData } from "../helpers/getData";
+import { PrivateUser } from "../models/user";
 
 const pages = ["Main"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -55,11 +56,12 @@ export default function NavBar() {
     }, []);
 
     const setIconUrlOnPage = async () => {
-        const user = await getUserData();
+        const user = await getData<PrivateUser>("/me");
         if (user === undefined || user.avatarUrl === undefined) {
             return;
         }
         setIconAlt(user.username + "Icon");
+        console.log(user.avatarUrl);
         setIconUrl(user.avatarUrl);
     };
 

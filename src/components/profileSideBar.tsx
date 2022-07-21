@@ -1,6 +1,6 @@
 import * as React from "react";
 import Card from "@mui/material/Card";
-import { getUserData } from "../helpers/getData";
+import { getData } from "../helpers/getData";
 import { PrivateUser } from "../models/user";
 
 export default function ProfileSideBar() {
@@ -10,7 +10,7 @@ export default function ProfileSideBar() {
     }, []);
 
     const getUser = async () => {
-        let userData = await getUserData();
+        const userData = await getData<PrivateUser>("/me");
         if (userData !== undefined) {
             setUser(userData);
         }

@@ -63,7 +63,7 @@ export const RegisterForm = () => {
         passwordAgain: false,
     });
     const setValidState = (prop: keyof FieldsValid, valid: boolean) => {
-        setFieldsValid({ ...fieldsValid, [prop]: true });
+        setFieldsValid({ ...fieldsValid, [prop]: valid });
     };
     const formValid = () =>
         fieldsValid.username &&
@@ -81,6 +81,7 @@ export const RegisterForm = () => {
         (prop: keyof RegisterState) =>
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const { value } = event.target;
+            let password: string, passwordAgain: string;
             switch (prop) {
                 case "username":
                 case "email":
@@ -95,7 +96,6 @@ export const RegisterForm = () => {
                     break;
                 case "password":
                 case "passwordAgain":
-                    let password: string, passwordAgain: string;
                     if (prop === "password") {
                         password = value;
                         passwordAgain = values.passwordAgain;

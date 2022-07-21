@@ -5,7 +5,6 @@ module.exports = {
     },
     extends: [
         "eslint:recommended",
-        "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier",
     ],
@@ -17,7 +16,7 @@ module.exports = {
         ecmaVersion: "latest",
         sourceType: "module",
     },
-    plugins: ["react", "@typescript-eslint"],
+    plugins: ["@typescript-eslint"],
     rules: {
         indent: ["error", 4],
         "linebreak-style": ["error", "unix"],

@@ -1,4 +1,6 @@
-import Post from "../models/post";
+import * as React from "react";
+import Post, { Posts } from "../models/post";
+import { getData } from "../helpers/getData";
 import NavBar from "./navBar";
 import ProfileSideBar from "./profileSideBar";
 
@@ -7,7 +9,7 @@ export const PostCard = (props: {
     first?: boolean;
     last?: boolean;
 }) => {
-    let { post } = props;
+    const { post } = props;
     let className = "p-4 border-solid border-x-2 border-slate-300 ";
     let extra: string;
     if (props.first && props.last) {
@@ -17,7 +19,7 @@ export const PostCard = (props: {
     } else if (props.last) {
         extra = "border-b-2 border-t rounded-bl-lg rounded-br-lg";
     } else {
-        extra = "border-y-1";
+        extra = "border-y";
     }
     className += extra;
 
@@ -32,18 +34,35 @@ export const PostCard = (props: {
     );
 };
 
-const Posts = () => {
-    let post: Post = {
-        id: 1,
-        title: "this is a title",
-        content: "this is the content",
+const PostsElement = () => {
+    const [postElements, setPostElements] = React.useState<
+        Array<React.ReactElement>
+    >([]);
+    React.useEffect(() => {
+        getPosts();
+    }, []);
+    const getPosts = async () => {
+        const posts = await getData<Posts>("/posts?limit=8&offset=0");
+        if (posts === undefined) {
+            return;
+        }
+        setPostElements(
+            posts.posts.map((post, i) => {
+                return (
+                    <PostCard
+                        post={post}
+                        first={i === 0}
+                        last={i === posts.posts.length - 1}
+                        key={i}
+                    />
+                );
+            })
+        );
     };
     return (
         <div className="container mx-auto max-w-50%">
             <ProfileSideBar />
-            <PostCard post={post} first={true} />
-            <PostCard post={post} />
-            <PostCard post={post} last={true} />
+            {postElements}
         </div>
     );
 };
@@ -52,7 +71,7 @@ const Main = () => {
     return (
         <>
             <NavBar />
-            <Posts />
+            <PostsElement />
         </>
     );
 };

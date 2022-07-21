@@ -1,12 +1,14 @@
 import _ from "lodash";
 import flog from "./axiosInstance";
-import { PrivateUser } from "../models/user";
 
-export async function getUserData(): Promise<PrivateUser | undefined> {
-    const token = localStorage.getItem("token")!;
+export async function getData<T>(url: string): Promise<T | undefined> {
+    const token = localStorage.getItem("token");
+    if (token === null) {
+        return undefined;
+    }
     return flog({
         method: "get",
-        url: "/me",
+        url,
         headers: {
             Authorization: token,
         },
@@ -14,7 +16,7 @@ export async function getUserData(): Promise<PrivateUser | undefined> {
         .then((response) => {
             return _.mapKeys(response.data, (__, key) => {
                 return _.camelCase(key);
-            }) as PrivateUser | undefined;
+            }) as T | undefined;
         })
         .catch(() => undefined);
 }
