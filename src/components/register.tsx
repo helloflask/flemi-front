@@ -77,8 +77,8 @@ export const RegisterForm = () => {
         email: "Email invalid",
         name: "The length must be shorter than 64",
     };
-    const handleChange =
-        (prop: keyof RegisterState) =>
+    // prettier-ignore
+    const handleChange = (prop: keyof RegisterState) =>
         (event: React.ChangeEvent<HTMLInputElement>) => {
             const { value } = event.target;
             let password: string, passwordAgain: string;
