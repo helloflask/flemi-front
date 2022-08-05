@@ -33,14 +33,15 @@ export const LoginForm = () => {
     const [errors, setErrors] = React.useState({ usernameOrEmail: "" });
     const [formValid, setFormValid] = React.useState(false);
 
+    // prettier-ignore
     const handleChange =
         (prop: keyof LoginState) =>
-        (event: React.ChangeEvent<HTMLInputElement>) => {
-            setValues({ ...values, [prop]: event.target.value });
-            if (prop === "password" && event.target.value !== "") {
-                errors.usernameOrEmail === "" && setFormValid(true);
-            }
-        };
+            (event: React.ChangeEvent<HTMLInputElement>) => {
+                setValues({ ...values, [prop]: event.target.value });
+                if (prop === "password" && event.target.value !== "") {
+                    errors.usernameOrEmail === "" && setFormValid(true);
+                }
+            };
     const handleUsernameOrPassword = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
